@@ -2,10 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import reduxThunk from 'redux-thunk'
 
 import App from './components/App'
+import Welcome from './components/Welcome'
 import SigninForm from './components/auth/SigninForm'
 import SignUpForm from './components/auth/SignUpForm'
 import SignOut from './components/auth/SignOut'
@@ -19,6 +20,7 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
+        <IndexRoute component={Welcome} />
         <Route path="signin" component={SigninForm} />
         <Route path="signup" component={SignUpForm} />
         <Route path="signout" component={SignOut} />
