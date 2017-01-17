@@ -13,12 +13,12 @@ export function signinUser({ email, password }) {
   return function(dispatch) {
     // Submin email/password to the server
     axios.post(`${API_URL}/signin`, { email, password })
-      .then(responce => {
+      .then(response => {
         // If request is good:
         // - Update state to indicate user is authenticated
         dispatch({ type: AUTH_USER })
         // - Save the JWT token
-        localStorage.setItem('token', responce.data.token)
+        localStorage.setItem('token', response.data.token)
         // - redirect to teh route '/feature'
         browserHistory.push('/feature')
       })
@@ -28,6 +28,20 @@ export function signinUser({ email, password }) {
         dispatch(authError('Bad login info'))
       })
 
+  }
+}
+
+export function signupUser({ email, password }) {
+  return function(dispatch) {
+    axios.post(`${API_URL}/signup`, { email, password })
+      .then(response => {
+        dispatch({ type: AUTH_ERROR })
+        localStorage.setItem('token', response.data.token)
+        browserHistory.push('/feature')
+      })
+      .catch(({ response }) => {
+        dispatch(authError(response.data.error))
+      })
   }
 }
 
